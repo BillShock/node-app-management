@@ -1,0 +1,10 @@
+<h1>Persone View 2</h1>
+<div id="app">
+    <ul>
+        <% persone.forEach(function(user){ %>
+          <%- user.nome %>
+        <% }); %>
+      </ul>
+
+      <a href="persone/create?nome='prova'">inserisci</a>
+</div>
