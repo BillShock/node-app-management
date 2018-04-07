@@ -1,3 +1,3 @@
 # node-app-management
 
-a [Sails](http://sailsjs.org),React,Redux application
+a [Sails](http://sailsjs.org), React, Redux application
