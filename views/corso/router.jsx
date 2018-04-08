@@ -13,6 +13,7 @@ class CorsoRouter extends React.Component{
                 <Switch>
                     <Route path={this.props.path} component={Corso} exact={true} />
                     <Route path={this.props.path+"/add"} component={Add} />
+                    <Route path={this.props.path+"/edit"} render={()=><Add data={{codice:10}}/>}/>
                     <Route path={this.props.path+"/show/:id"} component={Show} />
                 </Switch>
 

@@ -42,6 +42,10 @@ module.exports = {
 
     add:function(req,res){
         res.view("corso/add");
+    },
+
+    edit:function(req,res){
+        res.view("corso/add");
     }
 };
 

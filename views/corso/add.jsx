@@ -6,8 +6,25 @@ class Add extends React.Component{
     constructor(props,state){
         super(props,state);
        // this.state.codice="";
-        this.addCorso=this.addCorso.bind(this);
+       this.state={
+           data:{
+               codice:""
+           }
+       }
+       this.addCorso=this.addCorso.bind(this);
     }
+
+    componentDidMount(nextProps){
+       if(this.props.data !== undefined){
+         if(this.props.data.codice !== undefined){
+            this.setState({
+                codice: this.props.data.codice
+            })
+        }  
+       }
+        
+    }
+
     addCorso(event){
         axios.get('/corso/create?codice='+this.state.codice+'&nome='+this.state.nome)
         .then(res => {
@@ -17,13 +34,15 @@ class Add extends React.Component{
         event.preventDefault();
         
     }
+
+    
     render(){
         return(
             <div>
             <form onSubmit={this.addCorso}>
                 <h1>Inserisci Corso</h1>
                 <div className="form-group">
-                    <input onChange={(e)=>(this.setState({codice: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
+                    <input value={this.state.codice} onChange={(e)=>(this.setState({codice: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(e)=>(this.setState({nome: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Corso"/>
