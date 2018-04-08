@@ -17,7 +17,6 @@ class Show extends React.Component{
               console.log(res.data);
                 //this.props.setCorsi(res.data);
                 this.setState({ course: res.data.course[0], subscribers: res.data.subscribers });
-                
         })
     }
 

@@ -6,6 +6,7 @@ import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import { addAction, setPersoneAction,setTextFilter } from './commonsJSX/actions';
 import MainLayout from './layout';
 import configureStore from './configureStore';
+import HomePage from './homepage';
 import Router1 from './persone/route1.jsx';
 import CorsoRouter from './corso/router.jsx';
 
@@ -28,7 +29,9 @@ class App extends React.Component{
          <Provider store={store}>
             <BrowserRouter>
                 <MainLayout>
-                    
+                    <Switch>
+                        <Route exact path="/" component={HomePage} />
+                    </Switch>
                     <Router1 path="/persone" />
                     <CorsoRouter path="/corso"/>
                 </MainLayout>
