@@ -5,7 +5,7 @@ import Loading from '../commonsJSX/components/loading';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addAction,setAction,setTextFilter,setPageAction } from '../commonsJSX/actions';
+import { addAction,setAction,deleteAction,setTextFilter,setPageAction } from '../commonsJSX/actions';
 import axios from 'axios';
 
 class Corso extends React.Component{
@@ -34,7 +34,8 @@ class Corso extends React.Component{
     addCorso(event){
         event.preventDefault();
         //this.props.dispatch(addAction("Provola"));
-        this.props.addNewCorso({nome:"Aldo"});
+        //this.props.addNewCorso({nome:"Aldo"});
+        this.props.deleteCorso(10);
         //console.log(this.props.addNewCorso);
     }
 
@@ -69,7 +70,7 @@ class Corso extends React.Component{
                 <h1>Corso View</h1>
                 <input className="form-control" type="text" onChange={this.handleInputChange} placeholder="Ricerca"/>
                 <button onClick={this.addCorso}>Inserisci</button>
-                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} actionsBtn={[{lbl:"Show",tag:"id",link:"/show"},{lbl:"Aggiungi",link:"/add"}]} lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
+                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} showBtn={{lbl:"Show",tag:"id",link:"/show"}} editBtn={{lbl:"Edit",tag:"id",link:"/edit"}} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}}  lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
                 <Link className="btn btn-primary" to="/corso/add">Add Course</Link>
             </div>
         )
@@ -94,7 +95,8 @@ function mapDispatchToProps(dispatch){
         //addNewCorso: bindActionCreators(addAction,dispatch),
         addNewCorso: (element) => bindActionCreators(addAction,dispatch)(element,"corso"),
         setTextFilter: (text) => bindActionCreators(setTextFilter,dispatch)(text,"corso"),
-        setCorsi: (elements) => bindActionCreators(setAction,dispatch)(elements,"corso")
+        setCorsi: (elements) => bindActionCreators(setAction,dispatch)(elements,"corso"),
+        deleteCorso: (id) => bindActionCreators(deleteAction,dispatch)(id,"corso")
     }
 }
 

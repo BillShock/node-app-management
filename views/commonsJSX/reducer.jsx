@@ -6,6 +6,8 @@ export default function arrayReducer(state, action) {
       case "ADD_ELEMENT":
         //return [...state.corsi,{nome:'provola'}]
         return Object.assign({},{elements:[...state.elements,action.element]},{searchText: state.searchText},{pagination:state.pagination});
+      case "DELETE_ELEMENT":
+        return Object.assign({},{elements: state.elements.filter(( element) => element.id !== action.id )},{searchText: state.searchText},{pagination:state.pagination});
       case "SET_ELEMENTS":
         return Object.assign({},{elements:action.elements},{searchText: state.searchText},{pagination:state.pagination});
       case "TEXT_FILTER":

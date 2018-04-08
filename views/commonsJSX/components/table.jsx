@@ -12,12 +12,25 @@ class Table extends React.Component{
     }
 
     componentWillReceiveProps(nextProps){
+        /*
         if(this.props.actionsBtn === undefined){
             console.log(nextProps);
             this.setState({
                 actionsBtn: []
             });
         }
+        */
+       if(this.props.editBtn === undefined){
+        this.setState({
+            editBtn: false
+        });
+       }
+
+       if(this.props.deleteBtn === undefined){
+        this.setState({
+            deleteBtn: false
+        });
+       }
     }
 
     setPage(event){
@@ -38,18 +51,12 @@ class Table extends React.Component{
         const rows = this.props.rows.slice(this.props.initial,this.props.final).map((row,index) =>{
                 const lbl = this.props.lblRows.map((lbl,index)=>(<td key={index}>{row[lbl]}</td>));
                         
-                       // Crezione pulsanti azioni
-                       const actionsBtn = this.state.actionsBtn.map((btn,index) => {
-                            if(btn.tag !== undefined)
-                                return <a key={index} href={"/corso" + btn.link + "/" + row[btn.tag]}>{btn.lbl}</a>
-                            else
-                                return <a key={index} href={"/corso" + btn.link + "/"}>{btn.lbl}</a>
-                        });
+                        // Crezione pulsanti azioni
+                        var showBtn = <Link to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
+                        var editBtn = this.props.editBtn == false ? false : <Link to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }>{this.props.editBtn.lbl}</Link>
+                        var deleteBtn =  this.props.deleteBtn == false ? false : <a onClick={()=>this.props.deleteBtn.action(row.id)}>{this.props.deleteBtn.lbl}</a>
 
-                        
-
-
-                return <tr key={index}>{lbl}{this.state.actionsBtn.length > 0 &&  <td>{actionsBtn}</td> }</tr>
+                return <tr key={index}>{lbl}{(showBtn || editBtn || deleteBtn) && <td>{showBtn}{editBtn}{deleteBtn}</td> }</tr>
         });
 
         // Itero i numeri della pagination

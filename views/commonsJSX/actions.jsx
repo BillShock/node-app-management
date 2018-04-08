@@ -7,6 +7,13 @@ export const addAction = (element,name) => ({
     name
 });
 
+export const deleteAction = (id,name) => ({
+    type: "DELETE_ELEMENT",
+    //payload: {task: text}
+    id,
+    name
+});
+
 export const setAction = (elements,name) => ({
     type: "SET_ELEMENTS",
     //payload: {task: text}
