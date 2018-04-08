@@ -69,7 +69,7 @@ class Corso extends React.Component{
                 <h1>Corso View</h1>
                 <input className="form-control" type="text" onChange={this.handleInputChange} placeholder="Ricerca"/>
                 <button onClick={this.addCorso}>Inserisci</button>
-                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
+                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} actionsBtn={[{lbl:"Show",tag:"id",link:"/show"},{lbl:"Aggiungi",link:"/add"}]} lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
                 <Link className="btn btn-primary" to="/corso/add">Add Course</Link>
             </div>
         )
