@@ -1,5 +1,8 @@
 //Actions Corso
+import { setAction } from '../commonsJSX/actions';
+import axios from 'axios';
 
+/*
 export const addAction = corso => ({
     type: "ADD_CORSO",
     //payload: {task: text}
@@ -14,3 +17,17 @@ export const setCorsiAction = corsi => ({
     corsi: corsi
 
 });
+*/
+
+export function loadCourses() {  
+    return function(dispatch) {
+        axios.get('/corso/getCorsi')
+        .then(res => {
+                dispatch(setAction(res.data,"corso"));
+        })
+        
+    };
+  }
+
+
+

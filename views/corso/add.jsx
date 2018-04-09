@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import { addAction,updateAction } from '../commonsJSX/actions';
+
 
 class Add extends React.Component{
     constructor(props,state){
@@ -15,6 +19,13 @@ class Add extends React.Component{
     }
 
     componentDidMount(nextProps){
+        if(this.props.match.params.id === undefined){
+            alert("Si");
+        }
+        else{
+            alert(this.props.match.params.id)
+        }
+
        if(this.props.data !== undefined){
          if(this.props.data.codice !== undefined){
             this.setState({
@@ -26,13 +37,21 @@ class Add extends React.Component{
     }
 
     addCorso(event){
-        axios.get('/corso/create?codice='+this.state.codice+'&nome='+this.state.nome)
-        .then(res => {
-            console.log(res.data);
-        })
+       // axios.get('/corso/create?codice='+this.state.codice+'&nome='+this.state.nome)
+      //  .then(res => {
+      //      console.log(res.data);
+       // })
 
         event.preventDefault();
+        this.props.addNewCorso({id:10,codice:4000,nome:"OSS"});
+
+       
         
+    }
+
+    updateCorso(event){
+        event.preventDefault();
+        this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
     }
 
     
@@ -42,7 +61,7 @@ class Add extends React.Component{
             <form onSubmit={this.addCorso}>
                 <h1>Inserisci Corso</h1>
                 <div className="form-group">
-                    <input value={this.state.codice} onChange={(e)=>(this.setState({codice: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
+                    <input onChange={(e)=>(this.setState({codice: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
                 </div>
                 <div className="form-group">
                     <input onChange={(e)=>(this.setState({nome: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Corso"/>
@@ -88,4 +107,27 @@ class Add extends React.Component{
     }
 }
 
-export default Add;
+
+
+function mapStateToProps(state){
+    console.log(state.corsoReducer);
+    return{
+        corsi: state.corsoReducer.elements.filter((element)=>{return element.nome.toLowerCase().includes(state.corsoReducer.searchText.toLowerCase())}),
+        //corsi: state.corsoReducer.elements,
+        filter:state.filterReducer
+    }
+}
+
+
+function mapDispatchToProps(dispatch){
+   
+    return{
+        addNewCorso: (element) => bindActionCreators(addAction,dispatch)(element,"corso"),
+        updateCorso: (element) => bindActionCreators(updateAction,dispatch)(element,"corso")
+    }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Add);
+
+//export default Add;

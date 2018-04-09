@@ -1,6 +1,7 @@
-import {createStore,combineReducers} from 'redux';
+import {createStore,combineReducers,applyMiddleware} from 'redux';
 import corsoReducer from './corso/reducer';
 import personeReducer from './persone/reducer';
+import thunk from 'redux-thunk';
 
 
 import filterReducer from './persone/filter';
@@ -17,7 +18,8 @@ export default () => {
         personeReducer,
         filterReducer,
         terzo
-      })
+      }),
+      applyMiddleware(thunk)
     );
   
     return store;

@@ -7,6 +7,12 @@ export const addAction = (element,name) => ({
     name
 });
 
+export const updateAction = (element,name) => ({
+    type: "UPDATE_ELEMENT",
+    element,
+    name
+});
+
 export const deleteAction = (id,name) => ({
     type: "DELETE_ELEMENT",
     //payload: {task: text}
@@ -32,3 +38,5 @@ export const setPageAction = (pagination,name) =>({
     pagination,
     name
 });
+
+

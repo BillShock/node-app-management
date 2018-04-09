@@ -12,31 +12,18 @@ class Corso extends React.Component{
 
     constructor(){
         super();
-        this.state = ({ loading: false });
+        //this.state = ({ loading: false });
         this.addCorso=this.addCorso.bind(this);
         this.handleInputChange=this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
         
-        this.setState({loading: true});
-
-        axios.get('/corso/getCorsi')
-        .then(res => {
-              console.log(res.data);
-                this.props.setCorsi(res.data);
-                this.setState({ loading: false });
-        })
-
-        
     }
 
     addCorso(event){
         event.preventDefault();
-        //this.props.dispatch(addAction("Provola"));
-        //this.props.addNewCorso({nome:"Aldo"});
         this.props.deleteCorso(10);
-        //console.log(this.props.addNewCorso);
     }
 
 
@@ -56,7 +43,7 @@ class Corso extends React.Component{
             <li key={index}> {corso.nome}  </li>
         );
         
-        if(this.state.loading){
+        if(this.props.loading){
             return (
                 <div>
                     <h1>Corso View</h1>
@@ -83,8 +70,8 @@ function mapStateToProps(state){
     console.log(state.corsoReducer);
     return{
         corsi: state.corsoReducer.elements.filter((element)=>{return element.nome.toLowerCase().includes(state.corsoReducer.searchText.toLowerCase())}),
-        //corsi: state.corsoReducer.elements,
-        filter:state.filterReducer
+        loading: state.corsoReducer.loading,
+        filter: state.filterReducer
     }
 }
 
@@ -92,7 +79,6 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
    
     return{
-        //addNewCorso: bindActionCreators(addAction,dispatch),
         addNewCorso: (element) => bindActionCreators(addAction,dispatch)(element,"corso"),
         setTextFilter: (text) => bindActionCreators(setTextFilter,dispatch)(text,"corso"),
         setCorsi: (elements) => bindActionCreators(setAction,dispatch)(elements,"corso"),
@@ -103,4 +89,3 @@ function mapDispatchToProps(dispatch){
 
 export default connect(mapStateToProps,mapDispatchToProps)(Corso);
 
-//export default Corso;
