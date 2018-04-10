@@ -52,21 +52,28 @@ class Table extends React.Component{
                 const lbl = this.props.lblRows.map((lbl,index)=>(<td key={index}>{row[lbl]}</td>));
                         
                         // Crezione pulsanti azioni
-                        var showBtn = <Link to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
-                        var editBtn = this.props.editBtn == false ? false : <Link to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }>{this.props.editBtn.lbl}</Link>
-                        var deleteBtn =  this.props.deleteBtn == false ? false : <a onClick={()=>this.props.deleteBtn.action(row.id)}>{this.props.deleteBtn.lbl}</a>
+                        var showBtn = <Link className="button is-success" to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
+                        var editBtn = this.props.editBtn == false ? false : <Link className="button is-link is-outlined" to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }><span> {this.props.editBtn.lbl} </span> <span className="icon is-small"><i className="fas fa-edit"></i> </span></Link>
+                        var deleteBtn =  this.props.deleteBtn == false ? false : <a className="button is-danger is-outlined" onClick={()=>this.props.deleteBtn.action(row.id)}><span>{this.props.deleteBtn.lbl}</span> <span className="icon is-small"><i className="fas fa-times"></i> </span></a>
 
-                return <tr key={index}>{lbl}{(showBtn || editBtn || deleteBtn) && <td>{showBtn}{editBtn}{deleteBtn}</td> }</tr>
+                       
+    
+   
+ 
+
+                return <tr key={index}>{lbl}{(showBtn || editBtn || deleteBtn) && <td>{showBtn} {editBtn} {deleteBtn}</td> }</tr>
         });
 
         // Itero i numeri della pagination
         const pagination = ([...Array(Math.ceil(this.props.rows.length/this.props.perPage))]).map((x,i) =>
-           <li className="page-item" key={i}> <a className="page-link" onClick={this.setPage} href="#">{i+1}</a> </li>
+           <li key={i}> <a className="pagination-link" onClick={this.setPage}>{i+1}</a> </li>
         );
+
+
 
         return (
             <div>
-            <table className="table">
+            <table className="table is-fullwidth">
                  <thead className="thead-dark">
                    <tr>{throws}</tr>
                 </thead>
@@ -76,9 +83,11 @@ class Table extends React.Component{
             </table>
 
             <div>
-                <ul className="pagination">
-                    {pagination}
-                </ul>
+                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
+                    <ul className="pagination-list">
+                        {pagination}
+                    </ul>
+                </nav>
             </div>
             </div>
         )

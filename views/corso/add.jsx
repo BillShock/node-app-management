@@ -11,39 +11,48 @@ class Add extends React.Component{
         super(props,state);
        // this.state.codice="";
        this.state={
-           data:{
-               codice:""
-           }
+           
+            course:{
+               id:"",
+               codice:"",
+               nome:""
+            },
+           formActionText:"",
+           formAction:(event)=> event.preventDefault()
        }
        this.addCorso=this.addCorso.bind(this);
+       this.updateCorso=this.updateCorso.bind(this);
+       this.handleChange=this.handleChange.bind(this);
     }
 
     componentDidMount(nextProps){
         if(this.props.match.params.id === undefined){
-            alert("Si");
+            this.setState({
+                formActionText:"Inserisci",
+                formAction:this.addCorso
+            });
         }
         else{
-            alert(this.props.match.params.id)
+            var course = this.props.getCorso(this.props.match.params.id)[0];
+
+            this.setState({
+                course,
+                formActionText:"Aggiorna",
+                formAction:this.updateCorso
+            });
         }
 
-       if(this.props.data !== undefined){
-         if(this.props.data.codice !== undefined){
-            this.setState({
-                codice: this.props.data.codice
-            })
-        }  
-       }
         
     }
 
     addCorso(event){
        // axios.get('/corso/create?codice='+this.state.codice+'&nome='+this.state.nome)
       //  .then(res => {
-      //      console.log(res.data);
-       // })
-
+     //      console.log(res.data);
+     // })
+        
         event.preventDefault();
-        this.props.addNewCorso({id:10,codice:4000,nome:"OSS"});
+        this.props.addNewCorso(this.state.course);
 
        
         
@@ -54,53 +63,72 @@ class Add extends React.Component{
         this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
     }
 
+    handleChange(event) {
+        event.preventDefault();
+        let course = this.state.course;
+        let name = event.target.name;
+        let value = event.target.value;
+        course[name] = value;
+        this.setState({course,formActionText:this.state.formActionText,formAction:this.state.formAction})
+    }
+
+
     
     render(){
+
+
         return(
             <div>
-            <form onSubmit={this.addCorso}>
+            <form onSubmit={this.state.formAction}>
                 <h1>Inserisci Corso</h1>
-                <div className="form-group">
-                    <input onChange={(e)=>(this.setState({codice: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
+                <div className="field">
+                    <input value={this.state.course.codice} onChange={this.handleChange}  type="text" name="codice" className="input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
                 </div>
-                <div className="form-group">
-                    <input onChange={(e)=>(this.setState({nome: e.target.value}))} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Corso"/>
-                </div>
-                <div className="form-group">
-                <div className="row">
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Ore"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Aula"/>
-                    </div>
-                </div>
-                </div>
-                <div className="form-group">
-                 <div className="row">
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Data Inizio"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Data Termine 10%"/>
-                    </div>
-                </div>
-                </div>
-                <div className="form-group">
-                 <div className="row">
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Inizio Stage"/>
-                    </div>
-                    <div className="col">
-                        <input type="text" className="form-control" placeholder="Data Termine 10%"/>
-                    </div>
-                </div>
+                <div className="field">
+                    <input value={this.state.course.nome} onChange={this.handleChange} type="text" name="nome" className="input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Corso"/>
                 </div>
 
-                <div className="form-group">
-                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <p className="control is-expanded">
+                                <input type="text" className="input" placeholder="Ore"/>
+                            </p>
+                        </div>
+                        <div className="field">
+                            <p className="control s-expanded">
+                                <input type="text" className="input" placeholder="Aula"/>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <input type="submit" className="btn btn-primary" value="Inserisci"/>
+
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <input type="text" className="input" placeholder="Data Inizio"/>
+                        </div>
+                        <div className="field">
+                            <input type="text" className="input" placeholder="Data Termine 10%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <input type="text" className="input" placeholder="Inizio Stage"/>
+                        </div>
+                        <div className="field">
+                            <input type="text" className="input" placeholder="Data Termine 10%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="field">
+                    <textarea className="textarea" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
+                </div>
+                <input type="submit" className="button is-success" value={this.state.formActionText}/>
             </form>
             </div>
         )
@@ -109,12 +137,11 @@ class Add extends React.Component{
 
 
 
+
 function mapStateToProps(state){
-    console.log(state.corsoReducer);
+
     return{
-        corsi: state.corsoReducer.elements.filter((element)=>{return element.nome.toLowerCase().includes(state.corsoReducer.searchText.toLowerCase())}),
-        //corsi: state.corsoReducer.elements,
-        filter:state.filterReducer
+        getCorso: (id)=>{return state.corsoReducer.elements.filter((element)=>element.id==id)}
     }
 }
 

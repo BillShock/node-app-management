@@ -37,6 +37,7 @@ class Corso extends React.Component{
         console.log(this.props);
     }
 
+
     render(){
 
         const corsi = this.props.corsi.map((corso, index) => 
@@ -55,10 +56,44 @@ class Corso extends React.Component{
         return(
             <div>
                 <h1>Corso View</h1>
-                <input className="form-control" type="text" onChange={this.handleInputChange} placeholder="Ricerca"/>
+
+                <div>
+                    <nav className="level">
+                    <div className="level-left">
+                        <div className="level-item">
+                        <p className="subtitle is-5">
+                            <strong>{this.props.corsi.length}</strong> posts
+                        </p>
+                        </div>
+                        <div className="level-item">
+                        <div className="field has-addons">
+                                <p className="control">
+                                    <input className="input" type="text" onChange={this.handleInputChange} placeholder="Ricerca"/>
+                                </p>
+                                <p className="control">
+                                
+                                <button className="button">
+                                    Search
+                                </button>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                        <div className="level-right">
+                            <p className="level-item"><strong>All</strong></p>
+                            <p className="level-item"><a>Published</a></p>
+                            <p className="level-item"><a>Drafts</a></p>
+                            <p className="level-item"><a>Deleted</a></p>
+                            <p className="level-item"><Link className="button is-success" to={"/corso/add"}>Add Course</Link></p>
+                        </div>
+                    </nav>
+                </div>
+                
+                
                 <button onClick={this.addCorso}>Inserisci</button>
                 <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} showBtn={{lbl:"Show",tag:"id",link:"/show"}} editBtn={{lbl:"Edit",tag:"id",link:"/edit"}} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}}  lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
-                <Link className="btn btn-primary" to="/corso/add">Add Course</Link>
             </div>
         )
     }
