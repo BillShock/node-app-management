@@ -93,7 +93,7 @@ class Corso extends React.Component{
                 
                 
                 <button onClick={this.addCorso}>Inserisci</button>
-                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} showBtn={{lbl:"Show",tag:"id",link:"/show"}} editBtn={{lbl:"Edit",tag:"id",link:"/edit"}} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}}  lblRows={['id','codice','nome','ore','data_inizio','data_fine']} rows={this.props.corsi} />
+                <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} showBtn={{lbl:"Show",tag:"id",link:"/show"}} editBtn={{lbl:"Edit",tag:"id",link:"/edit"}} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}}  lblRows={['id','codice','nome','ore','dataInizio','dataFine']} rows={this.props.corsi} />
             </div>
         )
     }

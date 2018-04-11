@@ -19,7 +19,7 @@ export const setCorsiAction = corsi => ({
 });
 */
 
-export function loadCourses() {  
+export function loadCourses() {
     return function(dispatch) {
         axios.get('/corso/getCorsi')
         .then(res => {

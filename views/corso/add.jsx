@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { addAction,updateAction } from '../commonsJSX/actions';
+import { addAction,updateAction,setAction } from '../commonsJSX/actions';
+import Notification from '../commonsJSX/components/notification';
 
 
 class Add extends React.Component{
@@ -18,41 +19,55 @@ class Add extends React.Component{
                nome:""
             },
            formActionText:"",
-           formAction:(event)=> event.preventDefault()
+           formAction:(event)=> event.preventDefault(),
+           formSent:false
        }
        this.addCorso=this.addCorso.bind(this);
        this.updateCorso=this.updateCorso.bind(this);
        this.handleChange=this.handleChange.bind(this);
+       this.reloadCourses=this.reloadCourses.bind(this);
     }
 
     componentDidMount(nextProps){
         if(this.props.match.params.id === undefined){
             this.setState({
+                course:this.state.course,
                 formActionText:"Inserisci",
-                formAction:this.addCorso
+                formAction:this.addCorso,
+                formSent:this.state.formSent
             });
         }
         else{
             var course = this.props.getCorso(this.props.match.params.id)[0];
-
             this.setState({
                 course,
                 formActionText:"Aggiorna",
-                formAction:this.updateCorso
+                formAction:this.updateCorso,
+                formSent:this.state.formSent
             });
         }
-
-        
     }
 
     addCorso(event){
-       // axios.get('/corso/create?codice='+this.state.codice+'&nome='+this.state.nome)
-      //  .then(res => {
-     //      console.log(res.data);
-     // })
         
         event.preventDefault();
-        this.props.addNewCorso(this.state.course);
+
+        axios.get('/corso/create?codice='+this.state.course.codice+'&nome='+this.state.course.nome)
+        .then(res => {
+           console.log(res.data);
+           //this.props.addNewCorso(this.state.course);
+           this.setState({
+                course:this.state.course,
+                formActionText:this.state.formActionText,
+                formAction:this.state.formAction,
+                formSent: true,
+                notificationType:"is-success",
+                notificationMessage:"Corso inserito con successo."
+            });
+           this.reloadCourses();
+        })
+
+        
 
        
         
@@ -61,6 +76,13 @@ class Add extends React.Component{
     updateCorso(event){
         event.preventDefault();
         this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
+    }
+
+    reloadCourses(){
+        axios.get('/corso/getCorsi')
+        .then(res => {
+                this.props.setCorsi(res.data);
+        });
     }
 
     handleChange(event) {
@@ -72,13 +94,15 @@ class Add extends React.Component{
         this.setState({course,formActionText:this.state.formActionText,formAction:this.state.formAction})
     }
 
-
     
     render(){
-
+      
 
         return(
+            
+
             <div>
+            <Notification isVisible={this.state.formSent} type={this.state.notificationType} message={this.state.notificationMessage} />
             <form onSubmit={this.state.formAction}>
                 <h1>Inserisci Corso</h1>
                 <div className="field">
@@ -106,10 +130,10 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="text" className="input" placeholder="Data Inizio"/>
+                            <input type="date" className="input" placeholder="Data Inizio"/>
                         </div>
                         <div className="field">
-                            <input type="text" className="input" placeholder="Data Termine 10%"/>
+                            <input type="date" className="input" placeholder="Data Termine 10%"/>
                         </div>
                     </div>
                 </div>
@@ -117,10 +141,10 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="text" className="input" placeholder="Inizio Stage"/>
+                            <input type="date" className="input" placeholder="Inizio Stage"/>
                         </div>
                         <div className="field">
-                            <input type="text" className="input" placeholder="Data Termine 10%"/>
+                            <input type="date" className="input" placeholder="Data Termine 10%"/>
                         </div>
                     </div>
                 </div>
@@ -128,7 +152,7 @@ class Add extends React.Component{
                 <div className="field">
                     <textarea className="textarea" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
                 </div>
-                <input type="submit" className="button is-success" value={this.state.formActionText}/>
+                <input type="submit" className="button is-success" value={this.state.formActionText} disabled={this.state.formSent}/>
             </form>
             </div>
         )
@@ -150,11 +174,10 @@ function mapDispatchToProps(dispatch){
    
     return{
         addNewCorso: (element) => bindActionCreators(addAction,dispatch)(element,"corso"),
-        updateCorso: (element) => bindActionCreators(updateAction,dispatch)(element,"corso")
+        updateCorso: (element) => bindActionCreators(updateAction,dispatch)(element,"corso"),
+        setCorsi: (elements) => bindActionCreators(setAction,dispatch)(elements,"corso"),
+
     }
 }
 
-
 export default connect(mapStateToProps,mapDispatchToProps)(Add);
-
-//export default Add;

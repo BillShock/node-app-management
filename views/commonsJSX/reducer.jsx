@@ -1,15 +1,4 @@
 
-function updateElement(elements,id,element){
-    for(var i=0;i<elements.length;i++){
-        if(elements[i].id==id){
-            elements[i]=element;
-        }
-    }
-
-    return elements;
-}
-
-
 
 export default function arrayReducer(state, action) {
     switch (action.type) {
@@ -33,13 +22,13 @@ export default function arrayReducer(state, action) {
 }
 
 
-function prova(state,action){
+function updateElement(elements,id,element){
+  for(var i=0;i<elements.length;i++){
+      if(elements[i].id==id){
+          elements[i]=element;
+      }
+  }
 
-  return state.elements;
-
- return state.elements.filter((valore) => {
-   const match = valore.nome.includes("O");
-   
-   return match
-  })
+  return elements;
 }
+
