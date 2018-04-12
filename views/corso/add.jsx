@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -12,11 +11,11 @@ class Add extends React.Component{
         super(props,state);
        // this.state.codice="";
        this.state={
-           
             course:{
                id:"",
                codice:"",
-               nome:""
+               nome:"",
+               dataInizio:""
             },
            formActionText:"",
            formAction:(event)=> event.preventDefault(),
@@ -51,8 +50,13 @@ class Add extends React.Component{
     addCorso(event){
         
         event.preventDefault();
-
-        axios.get('/corso/create?codice='+this.state.course.codice+'&nome='+this.state.course.nome)
+        
+        //axios.get('/corso/create?codice='+this.state.course.codice+'&nome='+this.state.course.nome+'&data_inizio='+moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD'))
+        axios.get('/corso/create',{
+            codice: this.state.course.codice,
+            nome: this.state.course.nome,
+            data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
+        })
         .then(res => {
            console.log(res.data);
            //this.props.addNewCorso(this.state.course);
@@ -64,8 +68,15 @@ class Add extends React.Component{
                 notificationType:"is-success",
                 notificationMessage:"Corso inserito con successo."
             });
-           this.reloadCourses();
-        })
+            this.reloadCourses();
+        }).catch(function (error) {
+            console.log(error);
+        });
+        
+
+  
+      
+        
 
         
 
@@ -76,6 +87,20 @@ class Add extends React.Component{
     updateCorso(event){
         event.preventDefault();
         this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
+
+        //http://localhost:1337/user/update/123?name=joe
+
+
+        axios.get('/corso/create',{
+            codice:4000000,
+            nome:"OSAS"
+        })
+        .then(res => {
+           console.log(res.data);
+          
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
 
     reloadCourses(){
@@ -99,8 +124,6 @@ class Add extends React.Component{
       
 
         return(
-            
-
             <div>
             <Notification isVisible={this.state.formSent} type={this.state.notificationType} message={this.state.notificationMessage} />
             <form onSubmit={this.state.formAction}>
@@ -130,7 +153,7 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="date" className="input" placeholder="Data Inizio"/>
+                            <input type="date" onChange={this.handleChange} name="dataInizio" className="input" placeholder="Data Inizio"/>
                         </div>
                         <div className="field">
                             <input type="date" className="input" placeholder="Data Termine 10%"/>

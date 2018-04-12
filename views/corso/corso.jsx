@@ -13,17 +13,11 @@ class Corso extends React.Component{
     constructor(){
         super();
         //this.state = ({ loading: false });
-        this.addCorso=this.addCorso.bind(this);
         this.handleInputChange=this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
         
-    }
-
-    addCorso(event){
-        event.preventDefault();
-        this.props.deleteCorso(10);
     }
 
 
@@ -91,8 +85,6 @@ class Corso extends React.Component{
                     </nav>
                 </div>
                 
-                
-                <button onClick={this.addCorso}>Inserisci</button>
                 <Table throws={["ID","Codice","Nome Corso","Ore","Data Inizio","Data Fine",""]} showBtn={{lbl:"Show",tag:"id",link:"/show"}} editBtn={{lbl:"Edit",tag:"id",link:"/edit"}} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}}  lblRows={['id','codice','nome','ore','dataInizio','dataFine']} rows={this.props.corsi} />
             </div>
         )

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ class Table extends React.Component{
         super(state,props);
         this.state={actionsBtn:this.props.actionsBtn}
         this.setPage = this.setPage.bind(this);
+        this.deleteRow = this.deleteRow.bind(this);
     }
 
     componentWillReceiveProps(nextProps){
@@ -39,6 +41,15 @@ class Table extends React.Component{
         this.props.setPage(pagination);
     }
 
+    deleteRow(id){
+        axios.delete('/corso/'+ id)
+        .then(res => {
+                this.props.deleteBtn.action(id);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     render(){
 
 
@@ -54,12 +65,7 @@ class Table extends React.Component{
                         // Crezione pulsanti azioni
                         var showBtn = <Link className="button is-success" to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
                         var editBtn = this.props.editBtn == false ? false : <Link className="button is-link is-outlined" to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }><span> {this.props.editBtn.lbl} </span> <span className="icon is-small"><i className="fas fa-edit"></i> </span></Link>
-                        var deleteBtn =  this.props.deleteBtn == false ? false : <a className="button is-danger is-outlined" onClick={()=>this.props.deleteBtn.action(row.id)}><span>{this.props.deleteBtn.lbl}</span> <span className="icon is-small"><i className="fas fa-times"></i> </span></a>
-
-                       
-    
-   
- 
+                        var deleteBtn =  this.props.deleteBtn == false ? false : <a className="button is-danger is-outlined" onClick={(id)=>this.deleteRow(row.id)}><span>{this.props.deleteBtn.lbl}</span> <span className="icon is-small"><i className="fas fa-times"></i> </span></a>
 
                 return <tr key={index}>{lbl}{(showBtn || editBtn || deleteBtn) && <td>{showBtn} {editBtn} {deleteBtn}</td> }</tr>
         });
@@ -73,8 +79,8 @@ class Table extends React.Component{
 
         return (
             <div>
-            <table className="table is-fullwidth">
-                 <thead className="thead-dark">
+            <table className="table is-hoverable is-fullwidth">
+                 <thead>
                    <tr>{throws}</tr>
                 </thead>
                 <tbody>
