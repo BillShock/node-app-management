@@ -52,10 +52,13 @@ class Add extends React.Component{
         event.preventDefault();
         
         //axios.get('/corso/create?codice='+this.state.course.codice+'&nome='+this.state.course.nome+'&data_inizio='+moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD'))
-        axios.get('/corso/create',{
-            codice: this.state.course.codice,
-            nome: this.state.course.nome,
-            data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
+        axios.post('/corso',{
+            //params:{
+                codice: this.state.course.codice,
+                nome: this.state.course.nome,
+                data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
+           // }
+            //data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
         })
         .then(res => {
            console.log(res.data);
@@ -74,13 +77,6 @@ class Add extends React.Component{
         });
         
 
-  
-      
-        
-
-        
-
-       
         
     }
 
@@ -91,9 +87,11 @@ class Add extends React.Component{
         //http://localhost:1337/user/update/123?name=joe
 
 
-        axios.get('/corso/create',{
+        axios.patch('/corso/100',{
+            //params:{
             codice:4000000,
             nome:"OSAS"
+            //}
         })
         .then(res => {
            console.log(res.data);
@@ -101,6 +99,10 @@ class Add extends React.Component{
         }).catch(function (error) {
             console.log(error);
         });
+
+
+
+
     }
 
     reloadCourses(){

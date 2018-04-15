@@ -20,7 +20,7 @@ class Corso extends React.Component{
         
     }
 
-
+    
     handleInputChange(event) {
         this.props.setTextFilter(event.target.value);
     }

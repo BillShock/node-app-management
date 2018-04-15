@@ -4,9 +4,9 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import { addAction,setAction,setTextFilter } from './commonsJSX/actions';
-import MainLayout from './layout';
+import MainLayout from './layouts/layout';
 import configureStore from './configureStore';
-import HomePage from './homepage';
+import HomePage from './pages/homepage';
 import Router1 from './persone/route1.jsx';
 import CorsoRouter from './corso/router.jsx';
 

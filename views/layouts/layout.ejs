@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%=typeof title == 'undefined' ? 'New Sails App' : title%></title>
+    <title>New Sails App</title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
 
     <!--
         Stylesheets and Preprocessors
@@ -38,10 +40,7 @@
   </head>
 
   <body>
-   
     <%- body %>
-      
-    
 
 
 
@@ -50,8 +49,8 @@
         ========================
 
         HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-        that you load these templates client-side.
+        To work their magic, frameworks like React, Vue.js, Angular, Ember, and Backbone
+        require that you load these templates client-side.
 
         By default, your Gruntfile is configured to automatically load and precompile
         client-side JST templates in your `assets/templates` folder, then
@@ -61,7 +60,7 @@
         For example, here are a few things you could do:
 
             + Import templates from other directories
-            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Use a different view engine (handlebars, dust, pug/jade, etc.)
             + Internationalize your client-side templates using a server-side
               stringfile before they're served.
     -->
@@ -69,6 +68,22 @@
     <!--TEMPLATES-->
     
     <!--TEMPLATES END-->
+
+
+    <!--
+        Server-side View Locals
+        ========================
+
+        Sometimes, it's convenient to get access to your server-side view locals from
+        client-side JavaScript.  This can improve page load times, remove the need for
+        extra AJAX requests, and make your client-side code easier to understand and
+        to maintain.  Sails provides a simple mechanism for accessing dynamic view
+        locals: the "exposeLocalsToBrowser()" view partial.
+
+        For more information on using this built-in feature, see:
+        https://sailsjs.com/docs/concepts/views/locals#?escaping-untrusted-data-using-exposelocalstobrowser
+
+    -->
 
 
     <!--
@@ -95,9 +110,8 @@
     -->
 
     <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/dependencies/sails.io.js"></script>
     <script src="/js/bundle.js"></script>
-    <script src="/js/prova.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

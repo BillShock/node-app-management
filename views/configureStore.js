@@ -15,7 +15,7 @@ export default () => {
     const store = createStore(
       combineReducers({
         corsoReducer,
-        personeReducer,
+        //personeReducer,
         filterReducer,
         terzo
       }),

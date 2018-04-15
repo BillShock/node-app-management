@@ -23,6 +23,7 @@ export function loadCourses() {
     return function(dispatch) {
         axios.get('/corso/getCorsi')
         .then(res => {
+            console.log(res.data);
                 dispatch(setAction(res.data,"corso"));
         })
         

@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "./layout";
+import Layout from "../layouts/layout";
 
 class HomePage extends React.Component {
     render() {
