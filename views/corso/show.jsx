@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import Table from '../commonsJSX/components/table';
 import axios from 'axios';
+import { connect } from 'react-redux';
+
 
 class Show extends React.Component{
     constructor(props,state){
@@ -12,12 +14,17 @@ class Show extends React.Component{
 
     componentDidMount(){
 
-        axios.get('/corso/showCourse/'+ this.props.match.params.id)
+        var course = this.props.getCorso(this.props.match.params.id);
+        this.setState({
+            course: course[0],
+            subscriber: this.state.subscribers
+        });
+       
+        axios.get('/corso/show/'+ this.props.match.params.id)
         .then(res => {
-              console.log(res.data);
-                //this.props.setCorsi(res.data);
-                this.setState({ course: res.data.course[0], subscribers: res.data.subscribers });
+                this.setState({ course: this.state.course,subscribers: res.data.rows });
         })
+        
     }
 
     addSubscriber(){
@@ -48,4 +55,11 @@ class Show extends React.Component{
     }
 }
 
-export default Show;
+function mapStateToProps(state){
+    console.log(state.corsoReducer);
+    return{
+        getCorso: (id)=>(state.corsoReducer.elements.filter((element)=>{return element.id == id})),
+    }
+}
+
+export default connect(mapStateToProps)(Show);

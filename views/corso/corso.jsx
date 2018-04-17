@@ -14,10 +14,11 @@ class Corso extends React.Component{
         super();
         //this.state = ({ loading: false });
         this.handleInputChange=this.handleInputChange.bind(this);
+        
     }
 
     componentDidMount() {
-        
+       
     }
 
     
@@ -65,10 +66,9 @@ class Corso extends React.Component{
                                     <input className="input" type="text" onChange={this.handleInputChange} placeholder="Ricerca"/>
                                 </p>
                                 <p className="control">
-                                
-                                <button className="button">
-                                    Search
-                                </button>
+                                    <button className="button">
+                                        Search
+                                    </button>
                                 </p>
                                 
                             </div>

@@ -35,7 +35,7 @@ class MainLayout extends React.Component{
                 <ul className="menu-list">
                     <li><Link to="/"><i className="fas fa-home"></i>    Home</Link></li>
                     <li><Link to="/"><i className="fas fa-link"></i>    Link</Link></li>
-                    <li><Link to="/persone"><i className="fas fa-link"></i>    Persone</Link></li> 
+                    <li><Link to="/privato"><i className="fas fa-link"></i>    Privato</Link></li> 
                 </ul>
             <div className="menu-label">ADMINISTRATION<hr className="navbar-divider"/></div>
                 <ul className="menu-list">

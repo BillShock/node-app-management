@@ -9,6 +9,7 @@ import configureStore from './configureStore';
 import HomePage from './pages/homepage';
 import Router1 from './persone/route1.jsx';
 import CorsoRouter from './corso/router.jsx';
+import PrivatoRouter from './privato/router';
 
 import { loadCourses } from './corso/actions';
 
@@ -35,8 +36,9 @@ class App extends React.Component{
                     <Switch>
                         <Route exact path="/" component={HomePage} />
                     </Switch>
-                    <Router1 path="/persone" />
+                    <Router1 path="/persone"/>
                     <CorsoRouter path="/corso"/>
+                    <PrivatoRouter path="/privato"/>
                 </MainLayout>
             </BrowserRouter>
         </Provider>

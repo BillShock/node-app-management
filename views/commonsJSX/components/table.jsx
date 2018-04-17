@@ -62,10 +62,10 @@ class Table extends React.Component{
         const rows = this.props.rows.slice(this.props.initial,this.props.final).map((row,index) =>{
                 const lbl = this.props.lblRows.map((lbl,index)=>(<td key={index}>{row[lbl]}</td>));
                         
-                        // Crezione pulsanti azioni
-                        var showBtn = <Link className="button is-success" to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
-                        var editBtn = this.props.editBtn == false ? false : <Link className="button is-link is-outlined" to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }><span> {this.props.editBtn.lbl} </span> <span className="icon is-small"><i className="fas fa-edit"></i> </span></Link>
-                        var deleteBtn =  this.props.deleteBtn == false ? false : <a className="button is-danger is-outlined" onClick={(id)=>this.deleteRow(row.id)}><span>{this.props.deleteBtn.lbl}</span> <span className="icon is-small"><i className="fas fa-times"></i> </span></a>
+                    // Crezione pulsanti azioni
+                    var showBtn = <Link className="button is-success" to={"/corso" + this.props.showBtn.link + "/" + row[this.props.showBtn.tag] }>{this.props.showBtn.lbl}</Link>
+                    var editBtn = this.props.editBtn == false ? false : <Link className="button is-link is-outlined" to={"/corso" + this.props.editBtn.link + "/" + row[this.props.editBtn.tag] }><span> {this.props.editBtn.lbl} </span> <span className="icon is-small"><i className="fas fa-edit"></i> </span></Link>
+                    var deleteBtn =  this.props.deleteBtn == false ? false : <a className="button is-danger is-outlined" onClick={(id)=>this.deleteRow(row.id)}><span>{this.props.deleteBtn.lbl}</span> <span className="icon is-small"><i className="fas fa-times"></i> </span></a>
 
                 return <tr key={index}>{lbl}{(showBtn || editBtn || deleteBtn) && <td>{showBtn} {editBtn} {deleteBtn}</td> }</tr>
         });

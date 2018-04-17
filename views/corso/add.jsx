@@ -15,11 +15,18 @@ class Add extends React.Component{
                id:"",
                codice:"",
                nome:"",
-               dataInizio:""
+               ore:0,
+               dataInizio:"",
+               dataFine:"",
+               oraInizio:0,
+               OraFine:0,
+               inizioStage:"",
+               dataTermine:""
             },
            formActionText:"",
            formAction:(event)=> event.preventDefault(),
-           formSent:false
+           formSent:false,
+           btnState: ""
        }
        this.addCorso=this.addCorso.bind(this);
        this.updateCorso=this.updateCorso.bind(this);
@@ -50,13 +57,19 @@ class Add extends React.Component{
     addCorso(event){
         
         event.preventDefault();
-        
+        this.setState({btnState:"is-loading"});
         //axios.get('/corso/create?codice='+this.state.course.codice+'&nome='+this.state.course.nome+'&data_inizio='+moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD'))
         axios.post('/corso',{
             //params:{
                 codice: this.state.course.codice,
                 nome: this.state.course.nome,
-                data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
+                ore: this.state.course.ore,
+                data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                data_fine: moment(this.state.course.dataFine,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                ora_inizio: this.state.course.oraInizio,
+                ora_fine: this.state.course.oraFine,
+                inizio_stage: moment(this.state.course.inizioStage,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                data_termine10: moment(this.state.course.dataTermine,'YYYY-MM-DD').format('YYYY-MM-DD')
            // }
             //data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
         })
@@ -69,7 +82,9 @@ class Add extends React.Component{
                 formAction:this.state.formAction,
                 formSent: true,
                 notificationType:"is-success",
-                notificationMessage:"Corso inserito con successo."
+                notificationMessage:"Corso inserito con successo.",
+                formActionText:"Inserito",
+                btnState:""
             });
             this.reloadCourses();
         }).catch(function (error) {
@@ -141,12 +156,12 @@ class Add extends React.Component{
                     <div className="field-body">
                         <div className="field">
                             <p className="control is-expanded">
-                                <input type="text" className="input" placeholder="Ore"/>
+                                <input type="text" name="ore" onChange={this.handleChange} className="input" placeholder="Ore"/>
                             </p>
                         </div>
                         <div className="field">
                             <p className="control s-expanded">
-                                <input type="text" className="input" placeholder="Aula"/>
+                                <input type="text" name="aula" onChange={this.handleChange} className="input" placeholder="Aula"/>
                             </p>
                         </div>
                     </div>
@@ -158,7 +173,7 @@ class Add extends React.Component{
                             <input type="date" onChange={this.handleChange} name="dataInizio" className="input" placeholder="Data Inizio"/>
                         </div>
                         <div className="field">
-                            <input type="date" className="input" placeholder="Data Termine 10%"/>
+                            <input type="date" onChange={this.handleChange} name="dataFine" className="input" placeholder="Data Termine 10%"/>
                         </div>
                     </div>
                 </div>
@@ -166,10 +181,21 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="date" className="input" placeholder="Inizio Stage"/>
+                            <input type="date" onChange={this.handleChange} name="inizioStage" className="input" placeholder="Inizio Stage"/>
                         </div>
                         <div className="field">
-                            <input type="date" className="input" placeholder="Data Termine 10%"/>
+                            <input type="date" onChange={this.handleChange} name="dataTermine" className="input" placeholder="Data Termine 10%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <input type="number" onChange={this.handleChange} name="oraInizio" className="input" placeholder="Ora inizio"/>
+                        </div>
+                        <div className="field">
+                            <input type="number" onChange={this.handleChange} name="oraFine" className="input" placeholder="Ora fine"/>
                         </div>
                     </div>
                 </div>
@@ -177,7 +203,7 @@ class Add extends React.Component{
                 <div className="field">
                     <textarea className="textarea" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
                 </div>
-                <input type="submit" className="button is-success" value={this.state.formActionText} disabled={this.state.formSent}/>
+                <button type="submit" className={"button is-success " + this.state.btnState}  disabled={this.state.formSent}>{this.state.formActionText}</button>
             </form>
             </div>
         )
