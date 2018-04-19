@@ -5,18 +5,39 @@ import {bindActionCreators} from 'redux';
 class ModalSearch extends React.Component{
     constructor(props,state){
         super(props,state);
+
+        this.state=({
+            privati: this.props.privati,
+            autocompleteActive: 'is-hidden'
+        });
+        this.modalFilter = this.modalFilter.bind(this);
+    }
+
+    componentDidMount(){
+        
+    }
+
+    modalFilter(event){
+       
+        event.preventDefault();
+        if(event.target.value.length==0) {
+            this.setState({autocompleteActive:'is-hidden'});
+        }else{
+            this.setState({
+                privati:  this.props.privati.filter((privato)=>{return privato.nome.toLowerCase().includes(event.target.value)}),
+                autocompleteActive: ''
+            })
+        }
+       
     }
     render(){
-        const privati = this.props.privati.map((privato,index) =>
-            <tr key={index}>
-                <td>{privato.cf}</td>
-                <td>{privato.nome}</td>
-                <td>{privato.cognome}</td>
-                <td><input type="text"/></td>
-            </tr>
+        const privati = this.state.privati.map((privato,index) =>
+           
+            <li key={index}>{privato.cf} {privato.nome} {privato.cognome}</li>
+      
         );
         return(
-            <div className={"modal " + this.props.isActive}>
+            <div className={"modal modal-search " + this.props.isActive}>
                     <div className="modal-background"></div>
                     <div className="modal-card">
                         <header className="modal-card-head">
@@ -24,20 +45,14 @@ class ModalSearch extends React.Component{
                         <button onClick={this.props.closeAction} className="delete" aria-label="close"></button>
                         </header>
                         <section className="modal-card-body">
-                            <table>
-                            <thead>
-                                <tr>
-                                    <td>CF</td>
-                                    <td>Nome</td>
-                                    <td>Cognome</td>
-                                    <td>Prezzo</td>
-                                    <td>Operazione</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {privati}
-                            </tbody>
-                            </table>
+                        <input className="input" type="text" onChange={this.modalFilter} placeholder="Cerca Privato"/>
+                        <input className="input" type="text" placeholder="Prezzo"/>
+
+                        <div className={"autocomplete-menu " + this.state.autocompleteActive}>
+                            <ul>
+                                {privati.slice(0,10)}
+                            </ul>
+                        </div>
                         </section>
                         <footer className="modal-card-foot">
                         <button className="button is-success">Save changes</button>
