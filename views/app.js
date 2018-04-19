@@ -12,6 +12,7 @@ import CorsoRouter from './corso/router.jsx';
 import PrivatoRouter from './privato/router';
 
 import { loadCourses } from './corso/actions';
+import { loadPrivati } from './privato/actions';
 
 let store = configureStore();
 //console.log(store.getState());
@@ -23,6 +24,7 @@ let store = configureStore();
 //)
 
 store.dispatch(loadCourses());
+store.dispatch(loadPrivati());
 //store.dispatch(setAction([{id:20,codice:20,nome:"ok"}],"corso"));
 
 class App extends React.Component{

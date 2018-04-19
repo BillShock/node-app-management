@@ -36,6 +36,9 @@ module.exports.routes = {
     view: 'corso/corso'
   },
 
+  'get /corso/show/:id': 'CorsoController.showCourse',
+  
+  'get /privato': 'PrivatoController.getPrivati'
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

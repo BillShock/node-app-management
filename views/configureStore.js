@@ -1,5 +1,6 @@
 import {createStore,combineReducers,applyMiddleware} from 'redux';
 import corsoReducer from './corso/reducer';
+import privatoReducer from './privato/reducer';
 import personeReducer from './persone/reducer';
 import thunk from 'redux-thunk';
 
@@ -15,7 +16,7 @@ export default () => {
     const store = createStore(
       combineReducers({
         corsoReducer,
-        //personeReducer,
+        privatoReducer,
         filterReducer,
         terzo
       }),
