@@ -1,18 +1,86 @@
 
-.autocomplete-menu{
-    border: 1px solid #d6d6d6;
-    padding: 0 10px;
-    position: absolute;
-    z-index: 10;
-    background-color: white;
-    width: 100%;
-    top:-13px;
+#menu {
+    background-color: #40403F;
 }
 
-.field-autocomplete{
+#sidebar {
+    margin-top: 28px;
+}
+
+#containerMyLogo {
+    text-align: center;
+    height: 52px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: tomato; 
+}
+
+#myLogo {
     position: relative;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-.modal-search .modal-card-body{
-    height: 400px;
+h1 {
+    display: inline-block;
+    font-size: 30px;
+}
+
+#divider {
+    background-color: tomato;
+}
+
+#link2, #link3, #link4{
+    margin-left: 20px;
+}
+
+#welcome {
+    font-size: 20px;
+    background-color: tomato;
+    color: white;
+    border-radius: 25px;
+}
+
+#data_user {
+    text-align: center;
+    background-color: #40403F;
+    margin-top: 10px;
+}
+
+#img_user {
+    border-radius: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#topbar a:hover, #menu a:hover, #footer a:hover{
+    color: tomato;
+}
+
+#breadcrumb {
+    margin-top: -20px;
+    background-color: #DDE2E5;
+}
+
+#main {
+    background-color: #F8F7FF;
+}
+
+#menu a {
+    color: white;
+}
+
+#sidebar-label {
+    font-size: 15px;
+    color: white;
+}
+
+#footer {
+    margin-top: -25px;
+    border-top: solid;
+    border-top-color: #40403F;
+    border-top-width: 5px;
+    background-color: tomato;
+    color: white;
 }
