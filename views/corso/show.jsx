@@ -28,9 +28,9 @@ class Show extends React.Component{
         
     }
 
-    addSubscriber(){
+    addSubscriber(subscriber){
         this.setState((prevState, props) => ({
-            subscribers: [...prevState.subscribers,{nome:"Aldo"}]
+            subscribers: [...prevState.subscribers,subscriber]
         }));
     }
   
@@ -42,13 +42,13 @@ class Show extends React.Component{
         )
         return(
             <div>
-                <ModalSearch isActive={this.state.modalState} closeAction={()=>{this.setState({modalState:''})}} />
+                <ModalSearch isActive={this.state.modalState} addAction={this.addSubscriber} closeAction={()=>{this.setState({modalState:''})}} />
                 <div>
                    <h2> Codice Corso: {this.state.course.codice} </h2> <h2>Nome Corso :{this.state.course.nome} </h2>
                 </div>
                 <Table throws={["CF","Nome","Cognome","Prezzo",""]}  lblRows={["cf","nome","cognome","prezzo"]} rows={this.state.subscribers} showBtn={false} editBtn={false} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}} />
 
-                <button className="btn btn-success" onClick={()=>{this.setState({modalState:'is-active'})}}>Aggiungi Persona</button>
+                <button className="button is-success" onClick={()=>{this.setState({modalState:'is-active'})}}>Aggiungi Persona</button>
             </div>
         )
     }

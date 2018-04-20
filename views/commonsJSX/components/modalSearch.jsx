@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Cleave from 'cleave.js/react';
 
 class ModalSearch extends React.Component{
     constructor(props,state){
@@ -10,11 +11,13 @@ class ModalSearch extends React.Component{
             privati: this.props.privati,
             privatoInputValue:'',
             autocompleteActive: 'is-hidden',
-            privatoSelected:{},
+            privatoSelected:null,
+            price:"",
             privatiAdded:[]
         });
         this.modalFilter = this.modalFilter.bind(this);
         this.addPrivato = this.addPrivato.bind(this);
+        this.formValidation = this.formValidation.bind(this);
     }
 
     componentDidMount(){
@@ -28,7 +31,7 @@ class ModalSearch extends React.Component{
             this.setState({privatoInputValue:'', autocompleteActive:'is-hidden'});
         }else{
             this.setState({
-                privati:  this.props.privati.filter((privato)=>{return privato.nome.toLowerCase().includes(event.target.value)}),
+                privati: this.props.privati.filter((privato)=>{return privato.nome.toLowerCase().includes(event.target.value)}),
                 privatoInputValue:event.target.value,
                 autocompleteActive: ''
             })
@@ -40,13 +43,24 @@ class ModalSearch extends React.Component{
         this.setState({privatoInputValue:text,autocompleteActive:'is-hidden',privatoSelected:privato,privatiAdded:this.state.privatiAdded});
     }
     addPrivato(){
-        this.setState({privatoInputValue:'',autocompleteActive:'is-hidden',privatoSelected:{},privatiAdded:[...this.state.privatiAdded,this.state.privatoSelected]});
+        //this.setState({privatoInputValue:'',autocompleteActive:'is-hidden',privatoSelected:{},privatiAdded:[...this.state.privatiAdded,this.state.privatoSelected]});
+        if(this.formValidation()){
+            var privato = this.state.privatoSelected;
+            privato['prezzo'] = this.state.price;
+            this.props.addAction(privato);
+            this.setState({privatoInputValue:'',autocompleteActive:'is-hidden',privatoSelected:{},price:''})
+            this.props.closeAction();
+        }
+    }
+    formValidation(){
+        if(this.state.privatoSelected===null){
+            return false;
+        }
+        else return true;
     }
     render(){
         const privati = this.state.privati.map((privato,index) =>
-           
             <li key={index}><a onClick={()=>{this.selectPrivato(privato)}}>{privato.cf} {privato.nome} {privato.cognome}</a></li>
-      
         );
 
         const privatiAdded = this.state.privatiAdded.map((privato,index) =>
@@ -65,22 +79,28 @@ class ModalSearch extends React.Component{
                             <p className="control has-icons-left has-icons-right">
                                 <input className="input" value={this.state.privatoInputValue} type="text" onChange={this.modalFilter} placeholder="Cerca Privato"/>
                                 <span className="icon is-small is-left">
-                                <i className="fas fa-envelope"></i>
+                                    <i className="fas fa-user"></i>
                                 </span>
                                 <span className="icon is-small is-right">
-                                <i className="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                 </span>
                             </p>
                         </div>
 
                         <div className="field field-autocomplete">
                             <p className="control has-icons-left has-icons-right">
-                                <input className="input" type="text" placeholder="Prezzo"/>
+                                
+                            <Cleave className="input" placeholder="Inserisci il Prezzo"
+                                value={this.state.price}
+                                options={{numeral: true, numeralThousandsGroupStyle: 'thousand'}}
+                                onFocus={this.onCreditCardFocus}
+                                onChange={(event)=>{this.setState({price:event.target.value})}} />
+
                                 <span className="icon is-small is-left">
-                                <i className="fas fa-envelope"></i>
+                                    <i className="fas fa-euro-sign"></i>
                                 </span>
                                 <span className="icon is-small is-right">
-                                <i className="fas fa-check"></i>
+                                    <i className="fas fa-check"></i>
                                 </span>
                             </p>
 
@@ -91,27 +111,12 @@ class ModalSearch extends React.Component{
                             </div>
                         </div>
 
-                        <div className="field">
-                            <p className="control">
-                                <button onClick={this.addPrivato} className="button is-info">
-                                    Aggiungi
-                                </button>
-                            </p>
-                        </div>
-                        
-                        
-                        <div className="list-added">
-                            <h2>Privati Aggiunti:</h2>
-                            <ul>
-                                {privatiAdded}
-                            </ul>
-                        </div>
 
                         
                         </section>
                         <footer className="modal-card-foot">
-                        <button className="button is-success">Save changes</button>
-                        <button className="button">Cancel</button>
+                        <button onClick={this.addPrivato} className="button is-info">Aggiungi al Corso</button>
+                        <button className="button">Annulla</button>
                         </footer>
                     </div>
             </div>

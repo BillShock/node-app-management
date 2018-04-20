@@ -16,12 +16,13 @@ class Add extends React.Component{
                codice:"",
                nome:"",
                ore:0,
-               dataInizio:"",
-               dataFine:"",
-               oraInizio:0,
-               OraFine:0,
-               inizioStage:"",
-               dataTermine:""
+               aula:"",
+               data_inizio:"",
+               data_fine:"",
+               ora_inizio:0,
+               ora_fine:0,
+               inizio_stage:"",
+               data_termine10:""
             },
            formActionText:"",
            formAction:(event)=> event.preventDefault(),
@@ -45,6 +46,7 @@ class Add extends React.Component{
         }
         else{
             var course = this.props.getCorso(this.props.match.params.id)[0];
+            console.log(course);
             this.setState({
                 course,
                 formActionText:"Aggiorna",
@@ -64,12 +66,12 @@ class Add extends React.Component{
                 codice: this.state.course.codice,
                 nome: this.state.course.nome,
                 ore: this.state.course.ore,
-                data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD'),
-                data_fine: moment(this.state.course.dataFine,'YYYY-MM-DD').format('YYYY-MM-DD'),
-                ora_inizio: this.state.course.oraInizio,
-                ora_fine: this.state.course.oraFine,
-                inizio_stage: moment(this.state.course.inizioStage,'YYYY-MM-DD').format('YYYY-MM-DD'),
-                data_termine10: moment(this.state.course.dataTermine,'YYYY-MM-DD').format('YYYY-MM-DD')
+                data_inizio: moment(this.state.course.data_inizio,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                data_fine: moment(this.state.course.data_fine,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                ora_inizio: this.state.course.ora_inizio,
+                ora_fine: this.state.course.ora_fine,
+                inizio_stage: moment(this.state.course.inizio_stage,'YYYY-MM-DD').format('YYYY-MM-DD'),
+                data_termine10: moment(this.state.course.data_termine10,'YYYY-MM-DD').format('YYYY-MM-DD')
            // }
             //data_inizio: moment(this.state.course.dataInizio,'YYYY-MM-DD').format('YYYY-MM-DD')
         })
@@ -97,16 +99,23 @@ class Add extends React.Component{
 
     updateCorso(event){
         event.preventDefault();
-        this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
+        //this.props.updateCorso({id:10,codice:4000,nome:"OSS"});
 
         //http://localhost:1337/user/update/123?name=joe
 
-
-        axios.patch('/corso/100',{
-            //params:{
-            codice:4000000,
-            nome:"OSAS"
-            //}
+        var course = this.state.course;
+        axios.patch('/corso/' + this.props.match.params.id,{
+               codice: course.codice,
+               nome:course.nome,
+               ore:course.ore,
+               aula:course.aula,
+               data_inizio:course.data_inizio,
+               data_fine:course.data_fine,
+               ora_inizio:course.ora_inizio,
+               ora_fine:course.ora_fine,
+               inizio_stage:course.inizio_stage,
+               data_termine10:course.data_termine10
+            
         })
         .then(res => {
            console.log(res.data);
@@ -146,22 +155,22 @@ class Add extends React.Component{
             <form onSubmit={this.state.formAction}>
                 <h1>Inserisci Corso</h1>
                 <div className="field">
-                    <input value={this.state.course.codice} onChange={this.handleChange}  type="text" name="codice" className="input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Codice Corso" required/>
+                    <input value={this.state.course.codice} onChange={this.handleChange}  type="text" name="codice" className="input"  placeholder="Codice Corso" required/>
                 </div>
                 <div className="field">
-                    <input value={this.state.course.nome} onChange={this.handleChange} type="text" name="nome" className="input" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nome Corso"/>
+                    <input value={this.state.course.nome} onChange={this.handleChange} type="text" name="nome" className="input" placeholder="Nome Corso"/>
                 </div>
 
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
                             <p className="control is-expanded">
-                                <input type="text" name="ore" onChange={this.handleChange} className="input" placeholder="Ore"/>
+                                <input value={this.state.course.ore} type="number" name="ore" onChange={this.handleChange} min="1" className="input" placeholder="Ore"/>
                             </p>
                         </div>
                         <div className="field">
                             <p className="control s-expanded">
-                                <input type="text" name="aula" onChange={this.handleChange} className="input" placeholder="Aula"/>
+                                <input value={this.state.course.aula} type="text" name="aula" onChange={this.handleChange} className="input" placeholder="Aula"/>
                             </p>
                         </div>
                     </div>
@@ -170,21 +179,10 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="date" onChange={this.handleChange} name="dataInizio" className="input" placeholder="Data Inizio"/>
+                            <input value={moment(this.state.course.data_inizio,'YYYY-MM-DD').format('YYYY-MM-DD')} type="date" onChange={this.handleChange} name="data_inizio" className="input" placeholder="Data Inizio"/>
                         </div>
                         <div className="field">
-                            <input type="date" onChange={this.handleChange} name="dataFine" className="input" placeholder="Data Termine 10%"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="field is-horizontal">
-                    <div className="field-body">
-                        <div className="field">
-                            <input type="date" onChange={this.handleChange} name="inizioStage" className="input" placeholder="Inizio Stage"/>
-                        </div>
-                        <div className="field">
-                            <input type="date" onChange={this.handleChange} name="dataTermine" className="input" placeholder="Data Termine 10%"/>
+                            <input value={moment(this.state.course.data_fine,'YYYY-MM-DD').format('YYYY-MM-DD')} type="date" onChange={this.handleChange} name="data_fine" className="input" placeholder="Data Fine"/>
                         </div>
                     </div>
                 </div>
@@ -192,16 +190,27 @@ class Add extends React.Component{
                 <div className="field is-horizontal">
                     <div className="field-body">
                         <div className="field">
-                            <input type="number" onChange={this.handleChange} name="oraInizio" className="input" placeholder="Ora inizio"/>
+                            <input value={moment(this.state.course.inizio_stage,'YYYY-MM-DD').format('YYYY-MM-DD')} type="date" onChange={this.handleChange} name="inizio_stage" className="input" placeholder="Inizio Stage"/>
                         </div>
                         <div className="field">
-                            <input type="number" onChange={this.handleChange} name="oraFine" className="input" placeholder="Ora fine"/>
+                            <input value={moment(this.state.course.data_termine10,'YYYY-MM-DD').format('YYYY-MM-DD')} type="date" onChange={this.handleChange} name="data_termine10" className="input" placeholder="Data Termine 10%"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="field is-horizontal">
+                    <div className="field-body">
+                        <div className="field">
+                            <input value={this.state.course.ora_inizio} type="number" onChange={this.handleChange} name="ora_inizio" className="input" placeholder="Ora inizio"/>
+                        </div>
+                        <div className="field">
+                            <input value={this.state.course.ora_fine} type="number" onChange={this.handleChange} name="ora_fine" className="input" placeholder="Ora fine"/>
                         </div>
                     </div>
                 </div>
 
                 <div className="field">
-                    <textarea className="textarea" id="exampleFormControlTextarea1" rows="3" placeholder="Note"></textarea>
+                    <textarea className="textarea" rows="3" placeholder="Note"></textarea>
                 </div>
                 <button type="submit" className={"button is-success " + this.state.btnState}  disabled={this.state.formSent}>{this.state.formActionText}</button>
             </form>
