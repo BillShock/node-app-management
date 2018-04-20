@@ -46,7 +46,7 @@ class Show extends React.Component{
                 <div>
                    <h2> Codice Corso: {this.state.course.codice} </h2> <h2>Nome Corso :{this.state.course.nome} </h2>
                 </div>
-                <Table throws={["CF","Nome","Cognome","Prezzo",""]}  lblRows={["cf","nome","cognome","prezzo"]} rows={this.state.subscribers} showBtn={false} editBtn={false} deleteBtn={false} />
+                <Table throws={["CF","Nome","Cognome","Prezzo",""]}  lblRows={["cf","nome","cognome","prezzo"]} rows={this.state.subscribers} showBtn={false} editBtn={false} deleteBtn={{lbl:"Delete",tag:"id",action:this.props.deleteCorso}} />
 
                 <button className="btn btn-success" onClick={()=>{this.setState({modalState:'is-active'})}}>Aggiungi Persona</button>
             </div>
