@@ -7,4 +7,5 @@ Installation :
 ```
 git clone https://github.com/aldovandus/node-app-management
 npm install
+sails lift
 ```
