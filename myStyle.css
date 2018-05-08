@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+#app {
+    font-family: 'Nunito', sans-serif;
+}
+
+.dropdownLabel {
+    margin-left: 20px;
+    color: white;
+  }
+
+#dropdownIcon {
+    color: white;
+}
+
+a.dropdown-item:hover {
+    background-color: tomato !important; 
+  } 
+  
+#menu, #dropdownUser {
+    background-color: #40403F;
+}
+
+#sidebar {
+    margin-top: 28px;
+}
+
+.menu-list a:hover {
+    background-color: tomato;
+  }
+
+#containerMyLogo {
+    text-align: center;
+    height: 52px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: tomato; 
+}
+
+#myLogo {
+    position: relative;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 {
+    display: inline-block;
+    font-size: 30px;
+}
+
+#divider {
+    background-color: tomato;
+}
+
+#link2, #link3, #link4{
+    margin-left: 20px;
+}
+
+#welcome {
+    font-size: 20px;
+    background-color: tomato;
+    color: white;
+}
+
+#data_user {
+    text-align: center;
+    background-color: #40403F;
+    margin-top: 10px;
+}
+
+#img_user {
+    border-radius: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#topbar a:hover, #data_user a:hover {
+    color: tomato;
+}
+
+#navbarSearch {
+    border-radius: 5px;
+}
+
+#breadcrumb {
+    margin-top: -20px;
+    background-color: #DDE2E5;
+    border-radius: 25px; 
+    width: auto;
+}
+
+#breadcrumb-icon {
+    margin-left: 20px;
+}
+
+#main {
+    background-color: #F8F7FF;
+}
+
+#menu a {
+    color: white;
+}
+
+#sidebar-label {
+    font-size: 15px;
+    color: white;
+}
+
+.labels {
+    margin-left: 8px;
+    font-weight: bold;
+}
+
+.nameID {
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#footer {
+    margin-top: -25px;
+    border-top: solid;
+    border-top-color: #40403F;
+    border-top-width: 5px;
+    background-color: tomato;
+    color: white;
+}
+
+.autocomplete-menu{
+    border: 1px solid #d6d6d6;
+    padding: 0 10px;
+    position: absolute;
+    z-index: 10;
+    background-color: white;
+    width: 100%;
+}
+
+.field-autocomplete{
+    position: relative;
+}
+
+.modal-search .modal-card-body{
+    height: 400px;
+}
+
+.selected{
+    background-color: red;
+}
+
+.list-avatar .is-one-fifth{
+    width: 8.1% !important;
+    
+}
+
+.list-avatar .avatar .letter{
+    width: 22px;
+    text-align: center;
+}
+
+.list-avatar .avatar{
+    padding: 14px 15px;
+    background-color: gray;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: bold;
+}
